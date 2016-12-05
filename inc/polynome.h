@@ -12,12 +12,11 @@
 #define __POLYNOME__H__
 
 typedef struct monome {
-	int valeur;
+	float valeur;
 	int degre;
-	struct monome *suivant;
 }Monome; 
-
-typedef Monome *Polynome;
+#define ARRAY_SIZE_MAX 10
+typedef Monome *Polynome[ARRAY_SIZE_MAX];
 
 Monome creerMonome(float , int);
 Polynome creerPolynome(void);

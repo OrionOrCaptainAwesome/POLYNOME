@@ -11,25 +11,54 @@
 #ifndef __POLYNOME__H__
 #define __POLYNOME__H__
 
-typedef struct monome {
-	float valeur;
+
+typedef struct Monome {
+	float coef;
 	int degre;
 }Monome; 
-#define ARRAY_SIZE_MAX 10
-typedef Monome *Polynome[ARRAY_SIZE_MAX];
 
-Monome creerMonome(float , int);
-Polynome creerPolynome(void);
-Polynome ajouterMonome(Polynome , Monome);
-Polynome supprimerMonome(Polynome , int);
-Polynome additionner(Polynome , Polynome);
-Polynome multiplier(Polynome , Polynome);
-Monome mderiverI(Monome , int); // iterative
-Monome mderiverR(Monome , int);// recursif
-Polynome pderiver(Polynome , int);
-void ecrireMonomeI(Monome); // iterative
-void ecrireMonomeR(Monome);// recursif
-void ecrirePolynome(Polynome);
+typedef struct element {
+	MONO * monome;
+	struct element * suivant;
+	struct element * precedent;
+}Polyome;
+typedef Monome * MONO;
+typedef Polyome * POLY;
+
+
+MONO creerMonome(float coef, int puissance);
+POLY creerPolynome(void);
+POLY ajouterMonome(POLY p, MONO m);
+POLY supprimerMonome(POLY p, int deDegre);
+
+POLY additionner(POLY p1, POLY p2);
+POLY multiplier(POLY , POLY);
+MONO mderiverI(MONO , int); // iterative
+MONO mderiverR(MONO , int);// recursif
+POLY pderiver(POLY , int);
+void ecrireMonomeI(MONO); // iterative
+void ecrireMonomeR(MONO);// recursif
+void ecrirePolynome(POLY p);
+
+
+typedef enum Bool {
+  FALSE = 0;
+  TRUE = 1
+} BOOL;
+
+void efface_ecran(void);
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #endif /* __POLYNOME__H__ */

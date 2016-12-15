@@ -10,6 +10,7 @@ INCLUDE_DIR = inc
 BUILD_DIR = build
 APPLICATION_NAME = POLYNOME
 BINARY_NAME = ${BUILD_DIR}/${APPLICATION_NAME}
+LIB_NAME = ${INCLUDE_DIR}/${APPLICATION_NAME}
 CC = gcc
 
 # Commenter cette ligne si vous etes n'etes pas sous Mac OS X
@@ -17,15 +18,15 @@ CC = gcc
 
 LD_FLAGS = -lm
 
-GCC_SECURITY_FLAGS = -fstack-protector -pie -fPIE -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security
-
+GCC_SECURITY_FLAGS = -fstack-protector -pie -fPIE -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -shared -fpic
 CFLAGS = -I${INCLUDE_DIR} -Wall -ansi -pedantic -std=c99 ${OS_FLAGS} ${GCC_SECURITY_FLAGS}
 CFLAGS_DEBUG = -g -DDEBUG
 
 
 OBJS = ${SOURCE_DIR}/*.c
+LIB = ${INCLUDE_DIR}/*.so
 
-all: ${BINARY_NAME} ${BINARY_NAME}_debug
+all: ${BINARY_NAME} ${BINARY_NAME}_debug ${LIB_NAME}
 
 ${BINARY_NAME}: ${OBJS}
 	${CC} ${CFLAGS} -o $@ $^ ${LD_FLAGS}
@@ -33,7 +34,15 @@ ${BINARY_NAME}: ${OBJS}
 ${BINARY_NAME}_debug: ${OBJS}
 	${CC} ${CFLAGS} ${CFLAGS_DEBUG} -o $@ $^ ${LDFLAGS}
 
+${LIB_NAME}: ${LIB}
+    ${CC} ${CFLAGS} -o $@ $^ ${LDFLAGS}
+
 clean:
 	${RM} *.o ${BINARY_NAME} ${BINARY_NAME}_debug
 	${RM} -rf ${BINARY_NAME}_debug.dSYM
+    ${RM} *.so ${INCLUDE_DIR}
 
+lib: ${LIB_NAME}
+
+${LIB_NAME}: ${LIB}
+    ${CC} ${CFLAGS} -o $@ $^ ${LDFLAGS}

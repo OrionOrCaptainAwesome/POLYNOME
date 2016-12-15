@@ -14,6 +14,10 @@
 
 int main(int argc, char *argv[])
 {
+	//initialisation(); avec int argc, char *argv[] par exemple
+	//tant que menu pas valeur  correct faire
+	//menu();
+
 	return EXIT_SUCCESS;
 }
 
